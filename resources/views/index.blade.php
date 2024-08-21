@@ -43,9 +43,9 @@
                                <td>{{ Str::limit($todo->description, 50 ,'...') }}</td>
                                <td>{{ $todo->created_at->format('Y,M,D') }}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm text-white">View</a>
-                                    <a class="btn btn-success btn-sm text-white">Edit</a>
-                                    <form action="" method="post" style="display:inline-block">
+                                    <a class="btn btn-primary btn-sm text-white" href="">View</a>
+                                    <a class="btn btn-success btn-sm text-white" href="{{ route('todos.edit',$todo->id) }}">Edit</a>
+                                    <form action="{{ route('todos.destroy', $todo->id) }}" method="post" style="display:inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm " onclick="return confirm('Are you sure?')">Delete</button>

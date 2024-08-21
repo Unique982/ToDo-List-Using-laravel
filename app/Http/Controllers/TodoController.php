@@ -51,7 +51,14 @@ class TodoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $todos=Todo::findorFail($id);
+        // return view('todos.show',['todos'=>$todos]);
+        if (!$todos) {
+            return redirect()->route('todos.index')->with('error', 'Job not found.');
+        }
+
+        return view('todos.show', compact('todos'));
+
     }
 
     /**
@@ -59,7 +66,8 @@ class TodoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+   $todos = Todo::findorFail($id);
+   return view('todos.edit',['todos'=>$todos]);
     }
 
     /**
@@ -67,7 +75,18 @@ class TodoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'username'=>'required|string|max:255',
+            'title'=>'required|string|max:255',
+            'description'=>'required|string',
+        ]);
+        $todos= new todo();
+        $todos->username=$request->input('username');
+        $todos->title=$request->input('title');
+        $todos->description=$request->input('description');
+        $todos->save();
+         return redirect(route('todos.index'));
+
     }
 
     /**
@@ -75,6 +94,8 @@ class TodoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+     $todos = Todo::findorFail($id);
+     $todos->delete($id);
+     return redirect()->route('todos.index')->with('seccess','Delete successfully');
     }
 }

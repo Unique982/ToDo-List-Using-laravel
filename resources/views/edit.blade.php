@@ -20,7 +20,7 @@
             </h6>
         </div>
         <div class="card-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{ route('todos.edit') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label> User Name</label>
