@@ -16,7 +16,7 @@
     <div class="card mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Create ToDo list
-            <a  class =" btn btn-primary ml-5" href="{{ route('index') }}">List </a>
+            <a  class =" btn btn-primary ml-5" href="{{ route('todos.index') }}">List </a>
             </h6>
         </div>
         <div class="card-body">
@@ -24,25 +24,25 @@
                 @csrf
                 <div class="form-group">
                     <label> User Name</label>
-                    <input type="text" name="username" placeholder="Enter User Name" class="form-control" value="{{old('username')}}">
-                  {{-- @include('backend.includes.form_element_error',['field'=>'username']) --}}
+                    <input type="text" name="username" placeholder="Enter User Name" class="form-control" value="{{old('username',$todos->username)}}">
+                  @include('includes.form_error_msg',['field'=>'username'])
                 </div>
                 <div class="form-group">
                     <label> Title</label>
-                    <input type="text" name="title"  class="form-control" value="{{old('title')}}">
-                    {{-- @include('backend.includes.form_element_error',['field'=>'title']) --}}
+                    <input type="text" name="title"  class="form-control" placeholder="Enter Title" value="{{old('title',$todos->title)}}">
+                    @include('includes.form_error_msg',['field'=>'title'])
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                   <textarea name="" id="" cols="5" rows="5" class="form-control"></textarea>
-                    {{-- @include('backend.includes.form_element_error',['field'=>'favicon']) --}}
+                   <textarea name="description" id="" cols="5" rows="5" placeholder="Enter Description" class="form-control">value="{{old('title',$todos->description)}}</textarea>
+                    @include('includes.form_error_msg',['field'=>'description'])
                 </div>
 
 
                 <div class="form-group">
                   <input type="submit" value="Craete" class="btn btn-success">
-                    <input type="reset" value="Reset" class="btn btn-danger">
+                  <a href="{{ route('todos.index') }}" class="btn btn-danger">Cancel</a>
                 </div>
             </form>
             </div>

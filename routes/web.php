@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
 
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('/create', function () {
-    return view('create');
-});
+Route::get('/',[TodoController::class,'index'])->name('todos.index');
+Route::get('/todos/create',[TodoController::class,'create'])->name('todos.create');
+Route::post('/todos',[TodoController::class,'store'])->name('todos.store');
+

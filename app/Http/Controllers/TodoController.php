@@ -13,8 +13,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos_list = Todo::all();
-        return view('index',compact('todos_list'));
+        $todos = Todo::all();
+        return view('index',compact('todos'));
     }
 
     /**
@@ -30,7 +30,20 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'username'=>'required|string|max:255',
+            'title'=>'required|string|max:255',
+            'description'=>'required|string',
+        ]);
+        $todos= new todo();
+        $todos->username=$request->input('username');
+        $todos->title=$request->input('title');
+        $todos->description=$request->input('description');
+        $todos->save();
+         return redirect(route('todos.index'));
+
+
+
     }
 
     /**

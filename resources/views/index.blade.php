@@ -18,7 +18,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <h6 class="m-0 font-weight-bold text-primary text-center">TO Do List</h6>
-                <a  class =" btn btn-primary ml-5" href="">Create </a>
+                <a  class =" btn btn-primary ml-5" href="{{ route('todos.create') }}">Create </a>
             </div>
             <div class="card-body">
 
@@ -35,12 +35,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($todos as $todo)
                             <tr>
-                               <td>1</td>
-                               <td>Unique Neupane</td>
-                               <td>Online News Portal</td>
-                               <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum, reprehenderit.</td>
-                               <td>2081-13-18</td>
+                               <td>{{ $loop->index+1 }}</td>
+                               <td>{{ $todo->username }}</td>
+                               <td>{{ $todo->title }}</td>
+                               <td>{{ Str::limit($todo->description, 50 ,'...') }}</td>
+                               <td>{{ $todo->created_at->format('Y,M,D') }}</td>
                                 <td>
                                     <a class="btn btn-primary btn-sm text-white">View</a>
                                     <a class="btn btn-success btn-sm text-white">Edit</a>
@@ -51,6 +52,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
