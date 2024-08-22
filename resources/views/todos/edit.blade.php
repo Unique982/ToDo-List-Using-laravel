@@ -20,28 +20,29 @@
             </h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('todos.edit') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('todos.update',$todo->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label> User Name</label>
-                    <input type="text" name="username" placeholder="Enter User Name" class="form-control" value="{{old('username',$todos->username)}}">
+                    <input type="text" name="username" placeholder="Enter User Name" class="form-control" value="{{old('username',$todo->username)}}">
                   @include('includes.form_error_msg',['field'=>'username'])
                 </div>
                 <div class="form-group">
                     <label> Title</label>
-                    <input type="text" name="title"  class="form-control" placeholder="Enter Title" value="{{old('title',$todos->title)}}">
+                    <input type="text" name="title"  class="form-control" placeholder="Enter Title" value="{{old('title',$todo->title)}}">
                     @include('includes.form_error_msg',['field'=>'title'])
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                   <textarea name="description" id="" cols="5" rows="5" placeholder="Enter Description" class="form-control">value="{{old('title',$todos->description)}}</textarea>
+                   <textarea name="description" id="" cols="5" rows="5" placeholder="Enter Description" class="form-control">{{old('description',$todo->description)}}</textarea>
                     @include('includes.form_error_msg',['field'=>'description'])
                 </div>
 
 
                 <div class="form-group">
-                  <input type="submit" value="Craete" class="btn btn-success">
+                  <input type="submit" value="Update" class="btn btn-success">
                   <a href="{{ route('todos.index') }}" class="btn btn-danger">Cancel</a>
                 </div>
             </form>

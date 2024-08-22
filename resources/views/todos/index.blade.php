@@ -39,11 +39,11 @@
                             <tr>
                                <td>{{ $loop->index+1 }}</td>
                                <td>{{ $todo->username }}</td>
-                               <td>{{ $todo->title }}</td>
+                               <td>{{ Str::limit($todo->title,30, '...') }}</td>
                                <td>{{ Str::limit($todo->description, 50 ,'...') }}</td>
                                <td>{{ $todo->created_at->format('Y,M,D') }}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm text-white" href="">View</a>
+                                    <a class="btn btn-primary btn-sm text-white" href="{{ route('todos.show',$todo->id) }}">View</a>
                                     <a class="btn btn-success btn-sm text-white" href="{{ route('todos.edit',$todo->id) }}">Edit</a>
                                     <form action="{{ route('todos.destroy', $todo->id) }}" method="post" style="display:inline-block">
                                         @csrf

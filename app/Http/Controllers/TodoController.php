@@ -14,7 +14,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return view('index',compact('todos'));
+        return view('todos.index',compact('todos'));
     }
 
     /**
@@ -22,7 +22,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('todos.create');
     }
 
     /**
@@ -34,11 +34,13 @@ class TodoController extends Controller
             'username'=>'required|string|max:255',
             'title'=>'required|string|max:255',
             'description'=>'required|string',
+
         ]);
         $todos= new todo();
         $todos->username=$request->input('username');
         $todos->title=$request->input('title');
         $todos->description=$request->input('description');
+
         $todos->save();
          return redirect(route('todos.index'));
 
@@ -51,13 +53,13 @@ class TodoController extends Controller
      */
     public function show(string $id)
     {
-        $todos=Todo::findorFail($id);
+        $todo=Todo::findorFail($id);
         // return view('todos.show',['todos'=>$todos]);
-        if (!$todos) {
+        if (!$todo) {
             return redirect()->route('todos.index')->with('error', 'Job not found.');
         }
 
-        return view('todos.show', compact('todos'));
+        return view('todos.show', compact('todo'));
 
     }
 
@@ -66,25 +68,36 @@ class TodoController extends Controller
      */
     public function edit(string $id)
     {
-   $todos = Todo::findorFail($id);
-   return view('todos.edit',['todos'=>$todos]);
+        $todo= Todo::findOrFail($id);
+
+
+        if (!$todo) {
+            return redirect()->route('todos.index')->with('error', 'Todo list  not found.');
+        }
+
+        return view('todos.edit', compact('todo'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $todo= Todo::find($id);
+
+        if (!$todo) {
+            return redirect()->route('todods.index');
+        }
+
+       $validateDate= $request->validate([
             'username'=>'required|string|max:255',
             'title'=>'required|string|max:255',
             'description'=>'required|string',
         ]);
-        $todos= new todo();
-        $todos->username=$request->input('username');
-        $todos->title=$request->input('title');
-        $todos->description=$request->input('description');
-        $todos->save();
+        $todo->update($validateDate);
+
+
          return redirect(route('todos.index'));
 
     }
